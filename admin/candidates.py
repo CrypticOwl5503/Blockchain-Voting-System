@@ -9,11 +9,11 @@ class CandidateManager:
         self.election = election_manager
     
     def list_candidates(self):
-        """List all candidates in the election."""
+      
         return self.election.get_candidates()
     
     def add_candidate(self, name, party=None, bio=None, image_url=None):
-        """Add a new candidate to the election."""
+        
         info = {
             "party": party,
             "bio": bio,
@@ -22,11 +22,11 @@ class CandidateManager:
         return self.election.add_candidate(name, info)
     
     def remove_candidate(self, candidate_id):
-        """Remove a candidate from the election."""
+        
         return self.election.remove_candidate(candidate_id)
     
     def update_candidate(self, candidate_id, name=None, party=None, bio=None, image_url=None):
-        """Update candidate information."""
+        
         if self.election.get_state() != "SETUP":
             return False, "Cannot update candidates after setup phase"
             

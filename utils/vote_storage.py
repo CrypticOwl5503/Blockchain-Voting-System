@@ -1,6 +1,4 @@
-"""
-Simple vote storage for testing purposes.
-"""
+
 import json
 import os
 
