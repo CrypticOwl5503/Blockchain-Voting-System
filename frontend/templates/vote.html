@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+
+{% block title %}Vote - Blockchain Voting{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Cast Your Vote</h2>
+
+<div class="alert alert-info">
+    <strong>Important:</strong> Your vote is secure and anonymous. Once cast, it cannot be changed.
+</div>
+
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h4 class="mb-0">{{ election.title }}</h4>
+    </div>
+    <div class="card-body">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            
+            <div class="form-group">
+                <label class="form-control-label"><strong>Select a Candidate:</strong></label>
+                
+                {% for option in form.candidate %}
+                <div class="custom-control custom-radio mb-3">
+                    {{ option(class="custom-control-input") }}
+                    {{ option.label(class="custom-control-label") }}
+                    
+                    {% for candidate in election.candidates %}
+                        {% if candidate.name == option.label.text %}
+                            {% if candidate.info and candidate.info.party %}
+                            <span class="badge badge-info">{{ candidate.info.party }}</span>
+                            {% endif %}
+                            
+                            {% if candidate.info and candidate.info.bio %}
+                            <p class="mt-1 text-muted small">{{ candidate.info.bio }}</p>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                {% endfor %}
+                
+                {% if form.candidate.errors %}
+                <div class="text-danger">
+                    {% for error in form.candidate.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            
+            <div class="alert alert-warning">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="confirm-vote" required>
+                    <label class="custom-control-label" for="confirm-vote">
+                        I confirm this is my final choice and understand it cannot be changed.
+                    </label>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                {{ form.submit(class="btn btn-success btn-lg", id="vote-button", disabled=True) }}
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.getElementById('confirm-vote').addEventListener('change', function() {
+        document.getElementById('vote-button').disabled = !this.checked;
+    });
+</script>
+{% endblock %}

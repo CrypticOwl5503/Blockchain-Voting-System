@@ -1,0 +1,28 @@
+{
+  "title": "US Presidential Election 2024",
+  "description": "A secure blockchain-based election",
+  "start_time": null,
+  "end_time": null,
+  "state": "REGISTRATION",
+  "candidates": [
+    {
+      "id": 1,
+      "name": "Moyookh",
+      "info": {
+        "party": "Demo",
+        "bio": "69 years old",
+        "image_url": null
+      }
+    },
+    {
+      "id": 2,
+      "name": "Ayas",
+      "info": {
+        "party": "CPM",
+        "bio": "169 years old",
+        "image_url": null
+      }
+    }
+  ],
+  "admin_keys": []
+}

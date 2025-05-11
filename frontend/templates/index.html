@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+
+{% block title %}{{ election.title }} - Blockchain Voting{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+    <h1 class="display-4">{{ election.title }}</h1>
+    <p class="lead">{{ election.description }}</p>
+    <hr class="my-4">
+    <p>
+        Current Status: <span class="badge badge-{% if election.state == 'VOTING' %}success{% elif election.state in ['TALLYING', 'CLOSED'] %}danger{% else %}warning{% endif %}">{{ election.state }}</span>
+    </p>
+    <p>
+        {% if election.state == 'REGISTRATION' %}
+        Registration is open! Register now to participate in this election.
+        {% elif election.state == 'VOTING' %}
+        Voting is now open! Please login to cast your vote.
+        {% elif election.state in ['TALLYING', 'CLOSED'] %}
+        Voting has closed. You can view the results.
+        {% else %}
+        This election is currently in setup. Please check back later.
+        {% endif %}
+    </p>
+    
+    {% if election.state == 'REGISTRATION' %}
+    <a class="btn btn-primary btn-lg" href="{{ url_for('register') }}" role="button">Register to Vote</a>
+    {% elif election.state == 'VOTING' %}
+    <a class="btn btn-success btn-lg" href="{{ url_for('vote') }}" role="button">Cast Your Vote</a>
+    {% elif election.state in ['TALLYING', 'CLOSED'] %}
+    <a class="btn btn-info btn-lg" href="{{ url_for('results') }}" role="button">View Results</a>
+    {% endif %}
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Election Information</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Registered Voters:</strong> {{ election.registered_voters }}</p>
+                <p><strong>Votes Cast:</strong> {{ election.votes_cast }}</p>
+                <p><strong>Participation Rate:</strong> 
+                    {% if election.registered_voters > 0 %}
+                    {{ (election.votes_cast / election.registered_voters * 100) | round(1) }}%
+                    {% else %}
+                    0%
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Candidates</h5>
+            </div>
+            <div class="card-body">
+                {% if election.candidates %}
+                <ul class="list-group">
+                    {% for candidate in election.candidates %}
+                    <li class="list-group-item">
+                        <strong>{{ candidate.name }}</strong>
+                        {% if candidate.info and candidate.info.party %}
+                        <span class="badge badge-info">{{ candidate.info.party }}</span>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p>No candidates have been announced yet.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

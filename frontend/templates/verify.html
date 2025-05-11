@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block title %}Verify - Blockchain Voting{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Two-Factor Authentication</h4>
+            </div>
+            <div class="card-body">
+                <p class="alert alert-info">
+                    A one-time verification code has been generated for your account.
+                    Please enter it below to complete the login process.
+                </p>
+                
+                <form method="POST" action="">
+                    {{ form.hidden_tag() }}
+                    
+                    <div class="form-group">
+                        {{ form.otp.label(class="form-control-label") }}
+                        {% if form.otp.errors %}
+                            {{ form.otp(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.otp.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.otp(class="form-control") }}
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-group">
+                        {{ form.submit(class="btn btn-primary") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
