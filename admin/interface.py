@@ -269,10 +269,15 @@ class AdminInterface(cmd.Cmd):
             
         success, auth_factors = self.blockchain.register_voter(voter_address)
         if success:
+            # Use the simple OTP storage instead of saving the whole blockchain
+            from utils.otp_storage import save_otp
+            save_otp(voter_address, auth_factors['otp'])
+            
             print(f"Voter registered successfully")
             print(f"OTP code for voter: {auth_factors['otp']}")
         else:
             print(f"Error registering voter: {auth_factors}")
+
     
     def do_exit(self, arg):
         """Exit the admin interface."""

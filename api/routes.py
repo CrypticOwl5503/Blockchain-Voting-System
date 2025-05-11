@@ -55,15 +55,18 @@ def register_voter(voter_id, password_hash, otp):
     if not blockchain:
         return False, "Blockchain not initialized"
     
-    # Verify OTP from admin registration
-    if not blockchain.voter_registry.verify_voter_otp(voter_id, otp):
+    # Use the simple OTP verification instead
+    from utils.otp_storage import verify_otp
+    if not verify_otp(voter_id, otp):
         return False, "Invalid registration code"
     
-    # TODO: Store voter credentials securely
-    # In a production system, we would store this in a secure database
-    # For this demo, we'll just return success
+    # Add to blockchain registered voters
+    if voter_id not in blockchain.voter_registry.registered_voters:
+        blockchain.voter_registry.registered_voters.add(voter_id)
+        blockchain.voter_registry.verified_voters.add(voter_id)
     
     return True, "Voter registered successfully"
+
 
 def verify_voter(voter_id, password_hash):
     """Verify voter credentials and generate OTP for 2FA."""

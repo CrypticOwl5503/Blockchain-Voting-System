@@ -1,25 +1,34 @@
 {
-  "title": "US Presidential Election 2024",
-  "description": "A secure blockchain-based election",
+  "title": "New Election 2025",
+  "description": "A new test election",
   "start_time": null,
   "end_time": null,
-  "state": "REGISTRATION",
+  "state": "VOTING",
   "candidates": [
     {
       "id": 1,
-      "name": "Moyookh",
+      "name": "Pragyan",
       "info": {
-        "party": "Demo",
-        "bio": "69 years old",
+        "party": "Barak",
+        "bio": "An okayish candidate",
         "image_url": null
       }
     },
     {
       "id": 2,
-      "name": "Ayas",
+      "name": "Donald",
       "info": {
         "party": "CPM",
-        "bio": "169 years old",
+        "bio": "Communist Donald",
+        "image_url": null
+      }
+    },
+    {
+      "id": 3,
+      "name": "Modi",
+      "info": {
+        "party": "Democrat",
+        "bio": "Democrat Modi",
         "image_url": null
       }
     }

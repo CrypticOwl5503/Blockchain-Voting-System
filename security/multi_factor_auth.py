@@ -24,23 +24,32 @@ class MultiFactorAuth:
         
     def verify_otp(self, user_id, submitted_code):
         """Verify a submitted OTP code."""
+        print(f"DEBUG: Verifying OTP for {user_id}. Submitted: {submitted_code}")
+        print(f"DEBUG: All auth codes: {self.auth_codes}")
+        
         if user_id not in self.auth_codes:
+            print(f"DEBUG: No OTP found for user {user_id}")
             return False
             
         stored_code, expiry = self.auth_codes[user_id]
+        print(f"DEBUG: Stored code: {stored_code}, Expiry: {expiry}, Current time: {time.time()}")
         
         # Check if code has expired
         if time.time() > expiry:
+            print("DEBUG: OTP has expired")
             del self.auth_codes[user_id]
             return False
             
         # Check if code matches
         if stored_code != submitted_code:
+            print("DEBUG: OTP does not match")
             return False
             
         # Code is valid - remove it to prevent reuse
+        print("DEBUG: OTP verification successful")
         del self.auth_codes[user_id]
         return True
+
         
     def generate_qr_auth(self, user_id):
         """Generate a QR code for authentication."""
