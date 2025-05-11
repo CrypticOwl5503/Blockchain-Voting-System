@@ -12,7 +12,7 @@ class AdminAuth:
         self.admin_file = admin_file
         self.admins = self._load_admins()
         self.mfa = MultiFactorAuth()
-        self.active_sessions = {}  # token -> (admin_id, expiry)
+        self.active_sessions = {}  
         
     def _load_admins(self):
         """Load admin credentials from file."""

@@ -62,8 +62,6 @@ Result viewing after election completion
 
 The system consists of three main components:
 
-![System Architecture Diagram](./docs/images/system_overview.png)
-
 1. **Network**: Distributed nodes maintaining the election blockchain  
 2. **Admin Interface**: Command-line tools for election management  
 3. **Voter Frontend**: Web interface for participation in the election  
