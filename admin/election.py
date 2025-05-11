@@ -37,8 +37,17 @@ class Election:
     def save_config(self):
         """Save election configuration to file."""
         try:
+            # Save to the normal config file
             with open(self.election_file, 'w') as f:
                 json.dump(self.config, f, indent=2)
+            
+            # Also save to a separate file for the web interface
+            if not os.path.exists("data"):
+                os.makedirs("data")
+                
+            with open("data/election_config.json", 'w') as f:
+                json.dump(self.config, f, indent=2)
+                
             return True
         except Exception as e:
             print(f"Error saving election config: {str(e)}")

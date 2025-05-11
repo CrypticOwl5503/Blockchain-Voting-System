@@ -1,6 +1,5 @@
 # Blockchain Voting System
 
-![Blockchain Voting System Banner](docs/images/bannerized)
 
 This project implements a complete end-to-end solution for conducting elections with cryptographic security guarantees.
 
@@ -23,8 +22,6 @@ This project implements a complete end-to-end solution for conducting elections 
 ## Overview
 
 This blockchain voting system provides a robust platform for conducting secure elections. It leverages blockchain technology to ensure vote integrity, transparency, and voter privacy. The system includes administrative tools for election management and a user-friendly web interface for voters.
-
-![System Overview](docs/images/overview)
 
 ---
 
@@ -65,11 +62,33 @@ Result viewing after election completion
 
 The system consists of three main components:
 
-![System Architecture Diagram](docs/images/network)
+![System Architecture Diagram](./docs/images/system_overview.png)
 
 1. **Network**: Distributed nodes maintaining the election blockchain  
 2. **Admin Interface**: Command-line tools for election management  
 3. **Voter Frontend**: Web interface for participation in the election  
+
+---
+
+## Blockchain Structure
+
+![Blockchain Structure Diagram](./docs/images/blockchain_structure.png)
+
+---
+
+## Security Mechanism Diagrams
+
+### Voter Authentication Flow
+
+![Blockchain Structure Diagram](./docs/images/voter_authentication.png)
+
+### Homomorphic Vote Counting
+
+![Blockchain Structure Diagram](./docs/images/homomorphic.png)
+
+### Consensus Mechanism
+
+![Blockchain Structure Diagram](./docs/images/consensus.png)
 
 ---
 
@@ -141,7 +160,7 @@ python main.py web
 
 The web interface will be accessible at: [http://localhost:5000](http://localhost:5000)
 
-![System Components](docs/images/components)
+![System Components](./docs/images/frontend.png)
 
 ---
 
@@ -214,8 +233,6 @@ admin(admin)> generate_report
 Select report type (1-3): 2
 ```
 
-![Admin Interface Screenshot](docs/images/admin_interface.png)
-
 ---
 
 ## Voter Guide
@@ -228,7 +245,7 @@ Complete the registration form:
 - **Password**: Create a secure password  
 - **One-Time Registration Code**: The OTP provided by the administrator  
 
-![Voter Registration](docs/images/voter_registration.png)
+![Voter Registration](./docs/images/voter_registration.png)
 
 ### Login
 
@@ -246,14 +263,13 @@ Enter your credentials:
 - Confirm your choice  
 - Submit your vote  
 
-![Vote Casting](docs/images/vote_casting.png)
 
 ### Viewing Results
 
 Once the election is in `TALLYING` or `CLOSED` state, navigate to:  
 [http://localhost:5000/results](http://localhost:5000/results)
 
-![Results Page](docs/images/results_page.png)
+![Results Page](docs/images/results.png)
 
 ---
 
@@ -380,35 +396,6 @@ blockchain_voting/
 ├── data/
 └── main.py
 ```
-
----
-
-## Development Guide
-
-### Adding New Features
-
-- **Extending the Blockchain**: Modify `blockchain/blockchain.py`
-- **Enhancing Security**: Add to the `security/` directory
-- **Improving the UI**: Update `frontend/templates/` and `frontend/static/`
-- **Adding Admin Features**: Extend `admin/interface.py`
-
-### Adding Pictures to the README
-
-- Create a `docs/images/` directory  
-- Add your images to this directory  
-- Reference them in the README using Markdown:
-
-```markdown
-![Alt Text](docs/images/image_name.png)
-```
-
-Suggested images:
-
-- System architecture diagram  
-- Admin interface screenshot  
-- Voter interface screenshot  
-- Blockchain structure  
-- Security mechanism diagrams  
 
 ---
 

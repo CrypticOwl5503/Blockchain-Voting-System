@@ -108,11 +108,17 @@ class AdminInterface(cmd.Cmd):
         if not self.check_auth():
             return
             
+        from utils.vote_storage import count_votes
+        
         status = self.election.get_election_status()
+        # Update votes_cast with the file-based count
+        status['votes_cast'] = count_votes()
+        
         print("\nElection Status:")
         print("-" * 50)
         for key, value in status.items():
             print(f"{key}: {value}")
+
     
     def do_set_title(self, arg):
         """Set election title."""

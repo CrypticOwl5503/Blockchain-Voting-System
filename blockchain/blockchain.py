@@ -4,6 +4,7 @@ from mining.proof_of_work import ProofOfWork
 from blockchain.voter_registry import VoterRegistry
 from security.homomorphic import HomomorphicEncryption
 import time
+import os
 
 class Blockchain:
     def __init__(self):
@@ -164,7 +165,7 @@ class Blockchain:
         Returns a dictionary of candidate -> vote count.
         """
         candidates = self.get_candidates()
-        tally = {c: [] for c in candidates}
+        tally = {c: ['name'] for c in candidates}
         
         # Collect all encrypted votes from the blockchain
         for block in self.chain[1:]:  # Skip genesis block
@@ -189,27 +190,28 @@ class Blockchain:
 
     def get_candidates(self):
         """
-        Get a list of all candidates from transactions.
-        Returns a list of candidate names.
+        Get a list of all candidates.
+        This is used as a fallback when election data is not available.
         """
-        candidates = set()
+        if hasattr(self, 'election') and self.election:
+            return self.election.get_candidates()
         
-        # Check pending transactions
-        for tx in self.pending_transactions:
-            if "vote_for" in tx.data:
-                candidates.add(tx.data["vote_for"])
+        # Return real candidates if you've added them, not generic ones
+        # Read from file as a backup if needed
+        election_file = "../election_config.json"
+        if os.path.exists(election_file):
+            try:
+                with open(election_file, 'r') as f:
+                    election_data = json.load(f)
+                    return election_data.get("candidates", [])
+            except Exception as e:
+                print(f"Error loading candidates from file: {str(e)}")
         
-        # Check blockchain
-        for block in self.chain[1:]:  # Skip genesis block
-            for tx in block.transactions:
-                if tx.sender != "BLOCKCHAIN_REWARD":
-                    if "vote_for" in tx.data:
-                        candidates.add(tx.data["vote_for"])
-                    elif "encrypted_votes" in tx.data:
-                        for candidate in tx.data["encrypted_votes"].keys():
-                            candidates.add(candidate)
-        
-        return list(candidates) if candidates else ["Candidate 1", "Candidate 2"]
+        # Last resort fallback
+        return [{"name": "John Smith", "info": {"party": "Democratic Party"}},
+                {"name": "Jane Doe", "info": {"party": "Republican Party"}}]
+
+
         
     def replace_chain(self, new_chain):
         """

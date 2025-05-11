@@ -15,6 +15,11 @@
                     Please enter it below to complete the login process.
                 </p>
                 
+                <!-- Added for testing - Display OTP -->
+                <div class="alert alert-warning">
+                    <strong>Testing Only:</strong> Your OTP code is: {{ session['otp'] }}
+                </div>
+                
                 <form method="POST" action="">
                     {{ form.hidden_tag() }}
                     
