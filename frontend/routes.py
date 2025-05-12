@@ -75,8 +75,7 @@ def login():
             # Store OTP in session for verification
             session['otp'] = result.get('otp')
             session['voter_id'] = voter_id
-            
-            # Redirect to verification page
+             
             return redirect(url_for('verify'))
         else:
             flash('Invalid credentials. Please try again.', 'danger')
@@ -145,7 +144,7 @@ def vote():
 @app.route('/thank-you')
 @login_required
 def thank_you():
-    """Thank you page after voting."""
+   
     return render_template('thank_you.html')
 
 @app.route('/results')
@@ -157,7 +156,6 @@ def results():
         flash('Results are not available yet.', 'info')
         return redirect(url_for('index'))
     
-    # Get results via API
     success, results_data = get_results()
     
     if not success:

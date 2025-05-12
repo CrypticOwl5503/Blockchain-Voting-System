@@ -27,7 +27,7 @@ class AdminInterface(cmd.Cmd):
         self.token = None
         
     def preloop(self):
-        """Initialize the admin interface."""
+       
         # Check if any admin exists
         if not self.auth.admins:
             print("No admin accounts found. Creating default admin account.")
@@ -40,7 +40,7 @@ class AdminInterface(cmd.Cmd):
                 print(f"Error creating admin account: {message}")
     
     def emptyline(self):
-        """Do nothing on empty line."""
+       
         pass
         
     def default(self, line):
@@ -49,7 +49,7 @@ class AdminInterface(cmd.Cmd):
         print("Type 'help' to see available commands.")
     
     def do_login(self, arg):
-        """Log in to the admin interface."""
+        
         if self.current_user:
             print(f"Already logged in as {self.current_user}")
             return
@@ -76,7 +76,7 @@ class AdminInterface(cmd.Cmd):
         print(f"Logged in as {username}")
     
     def do_logout(self, arg):
-        """Log out from the admin interface."""
+        
         if not self.current_user:
             print("Not logged in")
             return
@@ -88,7 +88,7 @@ class AdminInterface(cmd.Cmd):
         print("Logged out successfully")
     
     def check_auth(self):
-        """Check if user is authenticated."""
+        
         if not self.current_user or not self.token:
             print("Not logged in. Please login first.")
             return False
@@ -104,7 +104,7 @@ class AdminInterface(cmd.Cmd):
         return True
     
     def do_status(self, arg):
-        """Show current election status."""
+        
         if not self.check_auth():
             return
             
@@ -121,7 +121,7 @@ class AdminInterface(cmd.Cmd):
 
     
     def do_set_title(self, arg):
-        """Set election title."""
+        
         if not self.check_auth():
             return
             
@@ -136,7 +136,7 @@ class AdminInterface(cmd.Cmd):
             print("Failed to set election title")
     
     def do_set_description(self, arg):
-        """Set election description."""
+        
         if not self.check_auth():
             return
             
@@ -151,7 +151,7 @@ class AdminInterface(cmd.Cmd):
             print("Failed to set election description")
     
     def do_change_state(self, arg):
-        """Change election state."""
+       
         if not self.check_auth():
             return
             
@@ -164,7 +164,7 @@ class AdminInterface(cmd.Cmd):
         print(message)
     
     def do_list_candidates(self, arg):
-        """List all candidates."""
+        
         if not self.check_auth():
             return
             
@@ -182,7 +182,7 @@ class AdminInterface(cmd.Cmd):
             print()
     
     def do_add_candidate(self, arg):
-        """Add a new candidate."""
+        
         if not self.check_auth():
             return
             
@@ -194,7 +194,7 @@ class AdminInterface(cmd.Cmd):
         print(message)
     
     def do_remove_candidate(self, arg):
-        """Remove a candidate."""
+        
         if not self.check_auth():
             return
             
@@ -206,7 +206,7 @@ class AdminInterface(cmd.Cmd):
             print("Invalid candidate ID")
     
     def do_generate_report(self, arg):
-        """Generate reports."""
+        
         if not self.check_auth():
             return
             
@@ -230,7 +230,7 @@ class AdminInterface(cmd.Cmd):
         print(message)
     
     def do_tally_votes(self, arg):
-        """Tally votes and show results."""
+       
         if not self.check_auth():
             return
             
@@ -260,7 +260,7 @@ class AdminInterface(cmd.Cmd):
             print(f"{name}: {votes} votes ({percentage:.1f}%)")
     
     def do_register_voter(self, arg):
-        """Register a new voter."""
+        
         if not self.check_auth():
             return
             
@@ -286,17 +286,17 @@ class AdminInterface(cmd.Cmd):
 
     
     def do_exit(self, arg):
-        """Exit the admin interface."""
+       
         if self.current_user:
             self.auth.logout(self.token)
         print("Exiting admin interface...")
         return True
         
     def do_quit(self, arg):
-        """Exit the admin interface."""
+        
         return self.do_exit(arg)
 
 def run_admin_interface(blockchain):
-    """Run the admin interface."""
+   
     interface = AdminInterface(blockchain)
     interface.cmdloop()

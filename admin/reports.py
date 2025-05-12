@@ -34,7 +34,7 @@ class ReportGenerator:
         return True, f"Voter report generated at {output_file}"
     
     def generate_result_report(self, output_file="election_results.json"):
-        """Generate a report on election results."""
+        
         success, results = self.election.get_results()
         
         if not success:
@@ -65,7 +65,7 @@ class ReportGenerator:
         return True, f"Election results report generated at {output_file}"
     
     def generate_blockchain_report(self, output_file="blockchain_report.json"):
-        """Generate a report on blockchain status and health."""
+       
         chain_length = len(self.blockchain.chain)
         is_valid = self.blockchain.is_chain_valid()
         
@@ -103,3 +103,4 @@ class ReportGenerator:
             json.dump(report, f, indent=2)
             
         return True, f"Blockchain report generated at {output_file}"
+    

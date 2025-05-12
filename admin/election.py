@@ -26,7 +26,7 @@ class Election:
         self.load_config()
     
     def load_config(self):
-        """Load election configuration from file."""
+        
         if os.path.exists(self.election_file):
             try:
                 with open(self.election_file, 'r') as f:
@@ -35,7 +35,7 @@ class Election:
                 print(f"Error loading election config: {str(e)}")
     
     def save_config(self):
-        """Save election configuration to file."""
+        
         try:
             # Save to the normal config file
             with open(self.election_file, 'w') as f:
@@ -54,23 +54,23 @@ class Election:
             return False
     
     def set_title(self, title):
-        """Set election title."""
+       
         self.config["title"] = title
         return self.save_config()
     
     def set_description(self, description):
-        """Set election description."""
+      
         self.config["description"] = description
         return self.save_config()
     
     def set_dates(self, start_time, end_time):
-        """Set election start and end times."""
+       
         self.config["start_time"] = start_time
         self.config["end_time"] = end_time
         return self.save_config()
     
     def change_state(self, new_state):
-        """Change the election state."""
+       
         if new_state not in self.STATES:
             return False, f"Invalid state. Must be one of: {', '.join(self.STATES)}"
             
@@ -104,11 +104,11 @@ class Election:
         return self.save_config(), f"Election state changed to {new_state}"
     
     def get_state(self):
-        """Get the current election state."""
+       
         return self.config["state"]
     
     def add_candidate(self, name, info=None):
-        """Add a candidate to the election."""
+       
         if self.config["state"] != "SETUP":
             return False, "Cannot add candidates after setup phase"
             
@@ -126,7 +126,7 @@ class Election:
         return self.save_config(), f"Candidate {name} added successfully"
     
     def remove_candidate(self, candidate_id):
-        """Remove a candidate from the election."""
+       
         if self.config["state"] != "SETUP":
             return False, "Cannot remove candidates after setup phase"
             
@@ -138,7 +138,7 @@ class Election:
         return False, "Candidate not found"
     
     def get_candidates(self):
-        """Get the list of candidates."""
+        
         return self.config["candidates"]
     
     def _tally_votes(self):

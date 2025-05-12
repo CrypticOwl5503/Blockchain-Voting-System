@@ -12,22 +12,24 @@ class AdminAuth:
         self.admin_file = admin_file
         self.admins = self._load_admins()
         self.mfa = MultiFactorAuth()
+       
+        # token -> (admin_id, expiry)
         self.active_sessions = {}  
         
     def _load_admins(self):
-        """Load admin credentials from file."""
+        
         if os.path.exists(self.admin_file):
             with open(self.admin_file, 'r') as f:
                 return json.load(f)
         return {}
     
     def _save_admins(self):
-        """Save admin credentials to file."""
+       
         with open(self.admin_file, 'w') as f:
             json.dump(self.admins, f, indent=2)
     
     def create_admin(self, username, password, role="admin"):
-        """Create a new admin account."""
+       
         if username in self.admins:
             return False, "Admin already exists"
             
@@ -47,7 +49,7 @@ class AdminAuth:
         return True, "Admin created successfully"
     
     def authenticate(self, username, password):
-        """Authenticate an admin."""
+       
         if username not in self.admins:
             return False, "Invalid credentials"
             
@@ -74,7 +76,7 @@ class AdminAuth:
             
         # Create session token
         token = os.urandom(32).hex()
-        expiry = time.time() + 3600  # 1 hour session
+        expiry = time.time() + 3600  
         
         self.active_sessions[token] = (username, expiry)
         return True, {"token": token, "expiry": expiry}

@@ -11,12 +11,12 @@ from blockchain.transaction import Transaction
 blockchain = None
 
 def set_blockchain(blockchain_instance):
-    """Set the global blockchain instance."""
+    
     global blockchain
     blockchain = blockchain_instance
 
 def get_election_info():
-    """Get current election information."""
+    
     # Import the vote counting function
     from utils.vote_storage import count_votes
     
@@ -111,8 +111,7 @@ def verify_voter(voter_id, password_hash):
     if not blockchain.voter_registry.is_registered(voter_id):
         return False, "Voter not registered"
     
-    # TODO: Verify password against stored hash
-    # For demo, we'll accept any password for registered voters
+    
     
     # Generate OTP for second factor
     otp = blockchain.voter_registry.mfa.generate_otp(voter_id)

@@ -76,7 +76,7 @@ class Blockchain:
                     
                 # Update the transaction data to contain encrypted votes
                 transaction.data["encrypted_votes"] = encrypted_votes
-                transaction.data.pop("vote_for")  # Remove the plaintext vote
+                transaction.data.pop("vote_for")  
             
             self.pending_transactions.append(transaction)
             self.votes_cast.add(voter_address)
