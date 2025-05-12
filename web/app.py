@@ -4,7 +4,7 @@ def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'your-secret-key-here'
     
-    # Import and register routes with the app
+    #Importing and registering routes with the app
     from web.routes import register_routes
     register_routes(app)
     

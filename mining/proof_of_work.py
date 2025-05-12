@@ -4,13 +4,10 @@ class ProofOfWork:
     def __init__(self, block, difficulty):
         self.block = block
         self.difficulty = difficulty
-        self.target = '0' * difficulty  # Target is a string with 'difficulty' number of leading zeros
+        self.target = '0' * difficulty  
+        # Target with leading zeros
         
     def mine(self):
-        """
-        Find a nonce that makes the block hash start with 'difficulty' number of zeros.
-        Returns the block with a valid nonce.
-        """
         nonce = 0
         start_time = time.time()
         
@@ -28,5 +25,4 @@ class ProofOfWork:
             nonce += 1
             
     def validate(self):
-        """Validate that the block's hash meets the difficulty requirement."""
         return self.block.hash.startswith(self.target)

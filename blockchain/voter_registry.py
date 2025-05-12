@@ -4,7 +4,7 @@ class VoterRegistry:
 
     def register_voter(self, voter_address):
         if voter_address in self.registered_voters:
-            return False  # Already registered
+            return False 
         self.registered_voters.add(voter_address)
         return True
 

@@ -2,10 +2,6 @@ import hashlib
 import json
 
 def calculate_hash(*args):
-    """
-    Calculate SHA-256 hash of the given arguments.
-    Args can be of any type that can be serialized to JSON.
-    """
     # Convert all arguments to strings and join
     hash_content = []
     for arg in args:

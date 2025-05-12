@@ -5,7 +5,6 @@ from network.peer import Peer
 from network.message import Message
 
 class Node:
-    """Node in the blockchain P2P network."""
     
     def __init__(self, blockchain, host='0.0.0.0', port=8333):
         self.blockchain = blockchain
@@ -17,11 +16,10 @@ class Node:
         self.known_peers = set()
     
     def start(self):
-        """Start the node and P2P server."""
+        #starting node and P2P server
         return self.server.start()
     
     def stop(self):
-        """Stop the node and disconnect from all peers."""
         self.server.stop()
         
         for peer in list(self.peers):
@@ -30,7 +28,6 @@ class Node:
         self.peers = []
     
     def connect_to_peer(self, host, port):
-        """Connect to a peer at the given address."""
         peer_addr = (host, port)
         if peer_addr in [(p.address[0], p.address[1]) for p in self.peers]:
             print(f"Already connected to {host}:{port}")
@@ -50,45 +47,40 @@ class Node:
             return False
     
     def add_incoming_peer(self, sock, address):
-        """Add a new peer from an incoming connection."""
+        #adding a new peer
         peer = Peer(sock, address, self)
         self.peers.append(peer)
         
         self.known_peers.add((address[0], address[1]))
         
-        # Request blockchain from new peer
+        #Requesting blockchain from new peer
         self.request_blockchain(peer)
         
-        # Request peer list from new peer
         self.request_peers(peer)
     
     def remove_peer(self, peer):
-        """Remove a peer from the list."""
+        #removing peer from list
         if peer in self.peers:
             self.peers.remove(peer)
             print(f"Peer {peer.address[0]}:{peer.address[1]} disconnected")
     
     def broadcast(self, message):
-        """Broadcast a message to all connected peers."""
         message.sender_id = self.node_id
         
         for peer in list(self.peers):
             peer.send(message)
     
     def broadcast_transaction(self, transaction):
-        """Broadcast a new transaction to all peers."""
         tx_data = transaction.to_dict()
         message = Message('NEW_TRANSACTION', tx_data, self.node_id)
         self.broadcast(message)
     
     def broadcast_block(self, block):
-        """Broadcast a new block to all peers."""
         block_data = block.to_dict()
         message = Message('NEW_BLOCK', block_data, self.node_id)
         self.broadcast(message)
     
     def request_blockchain(self, peer=None):
-        """Request blockchain from a peer or all peers."""
         message = Message('GET_CHAIN', {}, self.node_id)
         
         if peer:
@@ -97,7 +89,6 @@ class Node:
             self.broadcast(message)
     
     def request_peers(self, peer=None):
-        """Request peer list from a peer or all peers."""
         message = Message('GET_PEERS', {}, self.node_id)
         
         if peer:
@@ -106,7 +97,6 @@ class Node:
             self.broadcast(message)
     
     def handle_message(self, message, peer):
-        """Handle an incoming message from a peer."""
         msg_type = message.msg_type
         
         if msg_type == 'GET_CHAIN':
@@ -123,7 +113,6 @@ class Node:
             self.handle_peers(message, peer)
     
     def handle_get_chain(self, message, peer):
-        """Handle a GET_CHAIN request from a peer."""
         chain_data = []
         for block in self.blockchain.chain:
             chain_data.append(block.to_dict())
@@ -132,7 +121,6 @@ class Node:
         peer.send(response)
     
     def handle_chain(self, message, peer):
-        """Handle a CHAIN response from a peer."""
         chain_data = message.data
         
         if len(chain_data) <= len(self.blockchain.chain):
@@ -150,13 +138,11 @@ class Node:
             print(f"Error processing received blockchain: {str(e)}")
     
     def handle_new_block(self, message, peer):
-        """Handle a NEW_BLOCK message from a peer."""
         block_data = message.data
         print(f"Received new block #{block_data['index']} from peer")
         # TODO: Validate and add block to chain
     
     def handle_new_transaction(self, message, peer):
-        """Handle a NEW_TRANSACTION message from a peer."""
         tx_data = message.data
         
         from blockchain.transaction import Transaction
@@ -181,13 +167,11 @@ class Node:
             print(f"Error processing transaction: {str(e)}")
     
     def handle_get_peers(self, message, peer):
-        """Handle a GET_PEERS request from a peer."""
         peer_list = list(self.known_peers)
         response = Message('PEERS', peer_list, self.node_id)
         peer.send(response)
     
     def handle_peers(self, message, peer):
-        """Handle a PEERS response from a peer."""
         peer_list = message.data
         
         for peer_info in peer_list:

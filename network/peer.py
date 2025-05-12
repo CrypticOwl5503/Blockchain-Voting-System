@@ -4,7 +4,7 @@ import time
 from network.message import Message
 
 class Peer:
-    """Represents a connection to a peer in the blockchain network."""
+    # Represents a connection to the peer
     
     def __init__(self, sock, address, node):
         self.sock = sock
@@ -13,13 +13,13 @@ class Peer:
         self.running = True
         self.buffer = b''
         
-        # Start listening for messages
+        # Start the listening thread
         self.thread = threading.Thread(target=self._listen)
         self.thread.daemon = True
         self.thread.start()
     
     def _listen(self):
-        """Listen for incoming messages from the peer."""
+        # Listen for incoming messages from peer
         while self.running:
             try:
                 self.sock.settimeout(1.0)
@@ -43,7 +43,7 @@ class Peer:
                 break
     
     def _process_buffer(self):
-        """Process received data in buffer."""
+        # Process the data in buffer
         try:
             messages = self.buffer.split(b'\n')
             
@@ -57,7 +57,7 @@ class Peer:
             print(f"Error processing message from {self.address}: {str(e)}")
     
     def send(self, message):
-        """Send a message to the peer."""
+        # Send message to peer
         try:
             data = message.to_json() + '\n'
             self.sock.sendall(data.encode('utf-8'))
@@ -68,7 +68,7 @@ class Peer:
             return False
     
     def disconnect(self):
-        """Disconnect from the peer."""
+        # Disconnect from the peer
         if not self.running:
             return
             

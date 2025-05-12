@@ -11,7 +11,7 @@ class Block:
         self.hash = self.calculate_block_hash()
         
     def calculate_block_hash(self):
-        """Calculate and return the hash of the block."""
+        # generating the hash for the block using all key attributes
         return calculate_hash(
             self.index,
             self.previous_hash,
@@ -21,7 +21,7 @@ class Block:
         )
     
     def to_dict(self):
-        """Convert block to dictionary for serialization."""
+        # converting block into a dictionary, mostly for serialization
         return {
             'index': self.index,
             'timestamp': self.timestamp,

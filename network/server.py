@@ -2,7 +2,7 @@ import socket
 import threading
 
 class Server:
-    """P2P server for the blockchain network."""
+    # Creating the P2P server for blockchain network
     
     def __init__(self, node, host='0.0.0.0', port=8333):
         self.node = node
@@ -13,7 +13,7 @@ class Server:
         self.thread = None
     
     def start(self):
-        """Start the P2P server."""
+        # Starting the P2P server
         if self.running:
             return False
             
@@ -36,7 +36,7 @@ class Server:
             return False
     
     def _listen(self):
-        """Listen for incoming connections."""
+        # Listening for incoming connections
         self.sock.settimeout(1.0)
         
         while self.running:
@@ -53,7 +53,7 @@ class Server:
                     print(f"Error accepting connection: {str(e)}")
     
     def stop(self):
-        """Stop the P2P server."""
+        # Stopping the P2P server
         self.running = False
         
         if self.sock:
