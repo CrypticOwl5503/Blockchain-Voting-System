@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h2>Election Results</h2>
+        <p>Current vote counts from the blockchain:</p>
+        
+        {% if not results %}
+            <div class="alert alert-info">No votes have been cast yet or pending votes need to be mined.</div>
+            <a href="/mine" class="btn btn-primary">Mine Pending Votes</a>
+        {% else %}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Candidate</th>
+                        <th>Votes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for candidate, count in results.items() %}
+                    <tr>
+                        <td>{{ candidate }}</td>
+                        <td>{{ count }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+            <div class="alert alert-info">
+                Note: There may be pending votes that haven't been mined yet.
+                <a href="/mine" class="btn btn-sm btn-primary">Mine Pending Votes</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

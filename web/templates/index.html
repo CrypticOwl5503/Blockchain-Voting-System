@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="jumbotron">
+            <h1 class="display-4">Welcome to Blockchain Voting</h1>
+            <p class="lead">A secure, transparent, and decentralized voting system.</p>
+            <hr class="my-4">
+            <p>To participate in the election, follow these steps:</p>
+            <ol>
+                <li>Register as a voter to receive your cryptographic credentials</li>
+                <li>Use your credentials to cast your vote</li>
+                <li>View the election results in real-time</li>
+            </ol>
+            <p class="lead">
+                <a class="btn btn-primary btn-lg" href="/register" role="button">Register to Vote</a>
+                <a class="btn btn-success btn-lg" href="/vote" role="button">Cast Your Vote</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

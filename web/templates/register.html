@@ -1,0 +1,87 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+    <h2 class="my-4">Voter Registration</h2>
+    
+    {% if registered %}
+        <div class="alert alert-success">
+            <h4>Registration Successful!</h4>
+            <p>Please save your credentials safely. You will need these to cast your vote:</p>
+            
+            <div class="form-group mb-3">
+                <label><strong>Your Private Key:</strong></label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="privateKeyField" value="{{ private_key }}" readonly>
+                    <button class="btn btn-primary" type="button" id="copyPrivateKeyBtn" onclick="copyPrivateKey()">
+                        Copy Key
+                    </button>
+                </div>
+                <small id="copyMessage" class="form-text text-success mt-1"></small>
+            </div>
+            
+            <div class="form-group">
+                <label><strong>Your Public Key:</strong></label>
+                <textarea class="form-control" rows="5" readonly>{{ public_key }}</textarea>
+            </div>
+            
+            <div class="mt-4">
+                <a href="{{ url_for('vote') }}" class="btn btn-primary">Go to Voting</a>
+            </div>
+            
+            <p class="mt-3 text-danger">
+                <strong>Important:</strong> Keep your private key secure. It cannot be recovered if lost.
+            </p>
+        </div>
+    {% else %}
+        <div class="card">
+            <div class="card-body">
+                <form method="POST">
+                    <p>By registering, you will receive a digital credential that allows you to vote in the election.</p>
+                    <button type="submit" class="btn btn-primary">Register as Voter</button>
+                </form>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+<!-- Add JavaScript for copy functionality -->
+<script>
+function copyPrivateKey() {
+    var privateKeyField = document.getElementById("privateKeyField");
+    
+    // Select the text field
+    privateKeyField.select();
+    privateKeyField.setSelectionRange(0, 99999); // For mobile devices
+    
+    // Copy the text inside the text field
+    navigator.clipboard.writeText(privateKeyField.value)
+        .then(() => {
+            // Success message
+            var copyMessage = document.getElementById("copyMessage");
+            copyMessage.textContent = "Private key copied to clipboard!";
+            
+            // Temporarily change button style to indicate success
+            var btn = document.getElementById("copyPrivateKeyBtn");
+            btn.classList.remove("btn-primary");
+            btn.classList.add("btn-success");
+            btn.textContent = "Copied!";
+            
+            // Reset button after 2 seconds
+            setTimeout(() => {
+                btn.classList.remove("btn-success");
+                btn.classList.add("btn-primary");
+                btn.textContent = "Copy Key";
+                copyMessage.textContent = "";
+            }, 2000);
+        })
+        .catch(err => {
+            // Error handling
+            var copyMessage = document.getElementById("copyMessage");
+            copyMessage.textContent = "Failed to copy. Please select and copy manually.";
+            copyMessage.classList.remove("text-success");
+            copyMessage.classList.add("text-danger");
+        });
+}
+</script>
+{% endblock %}
